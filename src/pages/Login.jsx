@@ -6,17 +6,12 @@ export default function Login({ onLogin }) {
   const [email, setEmail]       = useState("")
   const [password, setPassword] = useState("")
   const [showPwd, setShowPwd]   = useState(false)
-  const [error, setError]       = useState("")
   const navigate = useNavigate()
 
   function handleSubmit(e) {
     e.preventDefault()
-    if (email === "admin@properly.co.za" && password === "Admin@123") {
-      onLogin()
-      navigate("/dashboard")
-    } else {
-      setError("Invalid credentials. Use admin@properly.co.za / Admin@123")
-    }
+    onLogin()
+    navigate("/dashboard")
   }
 
   const inp = "w-full rounded-lg px-3.5 py-2.5 text-slate-100 text-[14px] outline-none transition-all placeholder:text-slate-500"
@@ -51,18 +46,12 @@ export default function Login({ onLogin }) {
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-          {error && (
-            <div className="bg-red-500/10 border border-red-500/30 text-red-400 px-3.5 py-2.5 rounded-lg text-[13px]">
-              {error}
-            </div>
-          )}
-
           <div className="flex flex-col gap-1.5">
             <label className="text-[12px] font-semibold text-slate-400 tracking-wide">Email Address</label>
             <input
               type="email"
               value={email}
-              onChange={e => { setEmail(e.target.value); setError("") }}
+              onChange={e => setEmail(e.target.value)}
               placeholder="admin@properly.co.za"
               required
               className={inp}
@@ -78,7 +67,7 @@ export default function Login({ onLogin }) {
               <input
                 type={showPwd ? "text" : "password"}
                 value={password}
-                onChange={e => { setPassword(e.target.value); setError("") }}
+                onChange={e => setPassword(e.target.value)}
                 placeholder="Enter your password"
                 required
                 className={`${inp} pr-11`}
@@ -103,13 +92,6 @@ export default function Login({ onLogin }) {
             Sign In to Dashboard
           </button>
         </form>
-
-        <div className="mt-5 rounded-xl p-3.5" style={{ backgroundColor: "#252840" }}>
-          <span className="text-[12px] text-slate-500 block mb-1">Demo credentials:</span>
-          <code className="text-[11.5px] text-violet-400 bg-violet-500/10 px-2 py-0.5 rounded-md">
-            admin@properly.co.za&nbsp;/&nbsp;Admin@123
-          </code>
-        </div>
       </div>
     </div>
   )
