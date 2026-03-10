@@ -5,15 +5,16 @@ import {
   Building2, BarChart3, FileWarning, ChevronLeft,
   ChevronRight, LogOut, Settings, X
 } from "lucide-react"
+import logo from "../assets/Logo.png"
 
 const NAV = [
-  { icon: LayoutDashboard, label: "Dashboard",         path: "/dashboard" },
-  { icon: ShieldCheck,     label: "User Verification",  path: "/verification" },
-  { icon: Gavel,           label: "Disputes",           path: "/disputes" },
-  { icon: CreditCard,      label: "Payments",           path: "/payments" },
-  { icon: Building2,       label: "Listings & Sales",   path: "/listings" },
-  { icon: BarChart3,       label: "Analytics",          path: "/analytics" },
-  { icon: FileWarning,     label: "Compliance",         path: "/compliance" },
+  { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
+  { icon: ShieldCheck, label: "User Verification", path: "/verification" },
+  { icon: Gavel, label: "Disputes", path: "/disputes" },
+  { icon: CreditCard, label: "Payments", path: "/payments" },
+  { icon: Building2, label: "Listings & Sales", path: "/listings" },
+  { icon: BarChart3, label: "Analytics", path: "/analytics" },
+  { icon: FileWarning, label: "Compliance", path: "/compliance" },
 ]
 
 export default function Sidebar({ collapsed, setCollapsed, mobileOpen, setMobileOpen }) {
@@ -25,10 +26,9 @@ export default function Sidebar({ collapsed, setCollapsed, mobileOpen, setMobile
   }, [pathname])
 
   const itemCls = (active) =>
-    `flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13.5px] font-medium transition-all no-underline w-full border ${
-      active
-        ? "bg-violet-500/10 text-violet-400 font-semibold border-violet-500/20"
-        : "text-slate-400 hover:bg-[#252840] hover:text-slate-100 border-transparent"
+    `flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13.5px] font-medium transition-all no-underline w-full border ${active
+      ? "bg-violet-500/10 text-violet-400 font-semibold border-violet-500/20"
+      : "text-slate-400 hover:bg-[#252840] hover:text-slate-100 border-transparent"
     }`
 
   return (
@@ -60,8 +60,8 @@ export default function Sidebar({ collapsed, setCollapsed, mobileOpen, setMobile
           className="flex items-center gap-3 px-4 py-5 min-h-[72px] relative"
           style={{ borderBottom: "1px solid #2a2d3e" }}
         >
-          <div className="w-9 h-9 min-w-[36px] bg-gradient-to-br from-violet-600 to-violet-400 rounded-xl flex items-center justify-center text-lg font-black text-white shadow-lg shadow-violet-500/30">
-            P
+          <div className="w-12 h-12 min-w-[36px] rounded-xl flex items-center justify-center text-lg font-black text-white shadow-lg ">
+            <img src={logo} alt="" />
           </div>
           {!collapsed && (
             <div className="flex flex-col leading-tight overflow-hidden whitespace-nowrap">
@@ -73,9 +73,8 @@ export default function Sidebar({ collapsed, setCollapsed, mobileOpen, setMobile
           {/* Desktop collapse toggle */}
           <button
             onClick={() => setCollapsed(!collapsed)}
-            className={`hidden md:flex items-center justify-center w-6 h-6 rounded-md text-slate-500 hover:text-violet-400 transition-all ${
-              collapsed ? "mx-auto" : "absolute right-3 top-1/2 -translate-y-1/2"
-            }`}
+            className={`hidden md:flex items-center justify-center w-6 h-6 rounded-md text-slate-500 hover:text-violet-400 transition-all ${collapsed ? "mx-auto" : "absolute right-3 top-1/2 -translate-y-1/2"
+              }`}
             style={{ backgroundColor: "#252840", border: "1px solid #353852" }}
             title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
           >
