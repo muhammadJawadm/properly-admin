@@ -1,4 +1,4 @@
-﻿import { useState } from "react"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { ShieldCheck, Eye, EyeOff } from "lucide-react"
 
@@ -29,7 +29,7 @@ export default function Login({ onLogin }) {
       </div>
 
       <div
-        className="relative z-10 w-[420px] rounded-2xl p-9 shadow-[0_24px_60px_rgba(0,0,0,0.4)]"
+        className="relative z-10 w-full max-w-[420px] mx-4 rounded-2xl p-6 sm:p-9 shadow-[0_24px_60px_rgba(0,0,0,0.4)]"
         style={{ backgroundColor: "#1a1d27", border: "1px solid #2a2d3e" }}
       >
         {/* Logo row */}

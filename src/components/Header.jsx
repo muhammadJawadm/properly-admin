@@ -1,6 +1,6 @@
-﻿import { useState } from "react"
+import { useState } from "react"
 import { useLocation } from "react-router-dom"
-import { Bell, Search, ChevronDown } from "lucide-react"
+import { Bell, Search, ChevronDown, Menu } from "lucide-react"
 
 const PAGE_INFO = {
   "/dashboard":    { title: "Dashboard",           sub: "Welcome back, Admin" },
@@ -20,27 +20,37 @@ const NOTIFS = [
   { id: 4, dot: "bg-red-400",   text: "Compliance violation: Listing #L-2234",      time: "3h ago" },
 ]
 
-export default function Header() {
+export default function Header({ onMenuClick }) {
   const { pathname } = useLocation()
   const page = PAGE_INFO[pathname] || { title: "Admin", sub: "" }
   const [open, setOpen] = useState(false)
 
   return (
     <header
-      className="sticky top-0 z-40 h-16 flex items-center justify-between px-6 gap-4"
+      className="sticky top-0 z-40 h-16 flex items-center justify-between px-3 sm:px-6 gap-3"
       style={{ backgroundColor: "#1a1d27", borderBottom: "1px solid #2a2d3e" }}
     >
+      {/* Hamburger — mobile only */}
+      <button
+        onClick={onMenuClick}
+        className="md:hidden flex items-center justify-center w-9 h-9 rounded-lg text-slate-400 hover:bg-[#252840] hover:text-violet-400 transition-all shrink-0"
+        style={{ border: "1px solid #2a2d3e" }}
+        aria-label="Open sidebar"
+      >
+        <Menu size={18} />
+      </button>
+
       {/* Page title */}
-      <div className="flex flex-col leading-tight">
+      <div className="flex flex-col leading-tight flex-1 min-w-0">
         <h1 className="text-[17px] font-bold text-slate-100">{page.title}</h1>
         <span className="text-xs text-slate-500">{page.sub}</span>
       </div>
 
       {/* Right controls */}
-      <div className="flex items-center gap-3">
-        {/* Search */}
+      <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+        {/* Search – hidden on xs */}
         <div
-          className="flex items-center gap-2 rounded-lg px-3 py-2 min-w-[220px] focus-within:border-violet-500 focus-within:shadow-[0_0_0_2px_rgba(108,99,255,0.15)] transition-all"
+          className="hidden sm:flex items-center gap-2 rounded-lg px-3 py-2 w-[160px] md:w-[220px] focus-within:border-violet-500 focus-within:shadow-[0_0_0_2px_rgba(108,99,255,0.15)] transition-all"
           style={{ backgroundColor: "#0f1117", border: "1px solid #2a2d3e" }}
         >
           <Search size={14} className="text-slate-500 shrink-0" />
@@ -98,17 +108,17 @@ export default function Header() {
 
         {/* Admin profile */}
         <div
-          className="flex items-center gap-2.5 rounded-xl pl-1.5 pr-3 py-1.5 cursor-pointer hover:border-violet-500 hover:bg-[#252840] transition-all"
+          className="flex items-center gap-2.5 rounded-xl pl-1.5 pr-2 sm:pr-3 py-1.5 cursor-pointer hover:border-violet-500 hover:bg-[#252840] transition-all"
           style={{ backgroundColor: "#0f1117", border: "1px solid #2a2d3e" }}
         >
-          <div className="w-7 h-7 bg-gradient-to-br from-violet-600 to-violet-400 rounded-lg flex items-center justify-center text-[13px] font-bold text-white">
+          <div className="w-7 h-7 bg-gradient-to-br from-violet-600 to-violet-400 rounded-lg flex items-center justify-center text-[13px] font-bold text-white shrink-0">
             A
           </div>
-          <div className="flex flex-col leading-tight">
+          <div className="hidden sm:flex flex-col leading-tight">
             <span className="text-[13px] font-semibold text-slate-100">Super Admin</span>
             <span className="text-[10px] text-slate-500">Administrator</span>
           </div>
-          <ChevronDown size={13} className="text-slate-500 ml-1" />
+          <ChevronDown size={13} className="hidden sm:block text-slate-500 ml-1" />
         </div>
       </div>
     </header>

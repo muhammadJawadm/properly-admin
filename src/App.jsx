@@ -1,4 +1,4 @@
-﻿import { useState } from "react"
+import { useState, useEffect } from "react"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import Sidebar      from "./components/Sidebar"
 import Header       from "./components/Header"
@@ -12,15 +12,35 @@ import Analytics    from "./pages/Analytics"
 import Compliance   from "./pages/Compliance"
 
 function AdminLayout({ children }) {
-  const [collapsed, setCollapsed] = useState(false)
+  // On small screens start collapsed; on desktop start expanded
+  const [collapsed, setCollapsed] = useState(() => window.innerWidth < 768)
+  const [mobileOpen, setMobileOpen] = useState(false)
+
+  // Auto-respond to window resize
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth >= 768) {
+        setMobileOpen(false) // close mobile drawer when going to desktop
+      }
+    }
+    window.addEventListener("resize", onResize)
+    return () => window.removeEventListener("resize", onResize)
+  }, [])
+
   return (
     <div className="flex min-h-screen" style={{ backgroundColor: "#0f1117" }}>
-      <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
+      <Sidebar
+        collapsed={collapsed}
+        setCollapsed={setCollapsed}
+        mobileOpen={mobileOpen}
+        setMobileOpen={setMobileOpen}
+      />
+      {/* On mobile, no left margin (sidebar is overlaid); on desktop, push content right */}
       <div
-        className="flex flex-col flex-1 min-h-screen transition-all duration-300"
-        style={{ marginLeft: collapsed ? 72 : 260 }}
+        className="flex flex-col flex-1 min-h-screen transition-all duration-300 md:ml-[var(--sidebar-w)]"
+        style={{ "--sidebar-w": collapsed ? "72px" : "260px" }}
       >
-        <Header />
+        <Header onMenuClick={() => setMobileOpen(true)} />
         <main className="flex-1 overflow-y-auto p-6" style={{ backgroundColor: "#0f1117" }}>
           {children}
         </main>

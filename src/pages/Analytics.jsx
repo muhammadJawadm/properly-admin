@@ -1,4 +1,4 @@
-﻿import {
+import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   BarChart, Bar, PieChart, Pie, Cell
 } from "recharts"
@@ -55,7 +55,7 @@ export default function Analytics() {
   return (
     <div className="flex flex-col gap-6">
       {/* KPI row */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {[
           { label:"Weekly Visitors", val:"748",    sub:"+12% vs last week",   clr:"text-violet-400" },
           { label:"Conversion Rate", val:"4.8%",   sub:"Offers per visitor",  clr:"text-green-400"  },
@@ -106,8 +106,8 @@ export default function Analytics() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         {/* Engagement pie */}
         <Card title="User Engagement" badge="All time" badgeCls="bg-violet-500/10 text-violet-400 border-violet-500/20">
-          <div className="flex items-center gap-6">
-            <PieChart width={175} height={175}>
+          <div className="flex flex-col sm:flex-row items-center gap-6">
+            <PieChart width={175} height={175} className="shrink-0">
               <Pie data={engagementData} cx={82} cy={82} innerRadius={48} outerRadius={75} paddingAngle={3} dataKey="value">
                 {engagementData.map((e,i) => <Cell key={i} fill={e.color} />)}
               </Pie>

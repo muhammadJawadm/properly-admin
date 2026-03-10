@@ -1,23 +1,23 @@
-﻿import { useState } from "react"
+import { useState } from "react"
 import { Search, AlertTriangle, ShieldAlert, CheckCircle, X, FileWarning } from "lucide-react"
 
 const VIOLATIONS = [
-  { id:"CV-0041", listing:"L-2234", user:"Daniel Mthembu", type:"Price Misrepresentation", severity:"critical", status:"open",     date:"2025-05-18", desc:"Listing price differs by >20% from SARS valuation. Potential misrepresentation to buyers." },
-  { id:"CV-0040", listing:"L-2230", user:"Aisha Patel",    type:"FICA Non-Compliance",     severity:"high",     status:"open",     date:"2025-05-17", desc:"Agent did not complete FICA verification for seller before listing was published." },
-  { id:"CV-0039", listing:"L-2241", user:"Sipho Nkosi",    type:"Fraudulent Docs",         severity:"critical", status:"open",     date:"2025-05-17", desc:"Uploaded documents flagged as potentially altered by automated verification system." },
-  { id:"CV-0038", listing:"L-2198", user:"Lerato Dlamini", type:"Disclosure Omission",     severity:"medium",   status:"resolved", date:"2025-05-15", desc:"Property disclosure form missing mandatory section on structural defects." },
-  { id:"CV-0037", listing:"L-2192", user:"Thomas Mark",    type:"Unauthorized Listing",    severity:"low",      status:"resolved", date:"2025-05-14", desc:"Listing posted without seller signature on mandate form." },
+  { id: "CV-0041", listing: "L-2234", user: "Daniel Mthembu", type: "Price Misrepresentation", severity: "critical", status: "open", date: "2025-05-18", desc: "Listing price differs by >20% from SARS valuation. Potential misrepresentation to buyers." },
+  { id: "CV-0040", listing: "L-2230", user: "Aisha Patel", type: "FICA Non-Compliance", severity: "high", status: "open", date: "2025-05-17", desc: "Agent did not complete FICA verification for seller before listing was published." },
+  { id: "CV-0039", listing: "L-2241", user: "Sipho Nkosi", type: "Fraudulent Docs", severity: "critical", status: "open", date: "2025-05-17", desc: "Uploaded documents flagged as potentially altered by automated verification system." },
+  { id: "CV-0038", listing: "L-2198", user: "Lerato Dlamini", type: "Disclosure Omission", severity: "medium", status: "resolved", date: "2025-05-15", desc: "Property disclosure form missing mandatory section on structural defects." },
+  { id: "CV-0037", listing: "L-2192", user: "Thomas Mark", type: "Unauthorized Listing", severity: "low", status: "resolved", date: "2025-05-14", desc: "Listing posted without seller signature on mandate form." },
 ]
 
 const SEV = {
-  critical: { cls:"bg-red-500/10 text-red-400 border-red-500/20",       icon:<AlertTriangle size={14} /> },
-  high:     { cls:"bg-orange-500/10 text-orange-400 border-orange-500/20", icon:<ShieldAlert size={14} /> },
-  medium:   { cls:"bg-amber-500/10 text-amber-400 border-amber-500/20",  icon:<FileWarning size={14} /> },
-  low:      { cls:"bg-blue-500/10 text-blue-400 border-blue-500/20",     icon:<AlertTriangle size={14} /> },
+  critical: { cls: "bg-red-500/10 text-red-400 border-red-500/20", icon: <AlertTriangle size={14} /> },
+  high: { cls: "bg-orange-500/10 text-orange-400 border-orange-500/20", icon: <ShieldAlert size={14} /> },
+  medium: { cls: "bg-amber-500/10 text-amber-400 border-amber-500/20", icon: <FileWarning size={14} /> },
+  low: { cls: "bg-blue-500/10 text-blue-400 border-blue-500/20", icon: <AlertTriangle size={14} /> },
 }
 
 const STATUS = {
-  open:     "bg-red-500/10 text-red-400 border-red-500/20",
+  open: "bg-red-500/10 text-red-400 border-red-500/20",
   resolved: "bg-green-500/10 text-green-400 border-green-500/20",
 }
 
@@ -53,14 +53,14 @@ export default function Compliance() {
       )}
 
       {/* Summary */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {[
-          { label:"Critical", val:2, cls:"bg-red-500/10 border-red-500/20 text-red-400" },
-          { label:"High",     val:1, cls:"bg-orange-500/10 border-orange-500/20 text-orange-400" },
-          { label:"Medium",   val:1, cls:"bg-amber-500/10 border-amber-500/20 text-amber-400" },
-          { label:"Low",      val:1, cls:"bg-blue-500/10 border-blue-500/20 text-blue-400" },
+          { label: "Critical", val: 2, cls: "bg-red-500/10 border-red-500/20 text-red-400" },
+          { label: "High", val: 1, cls: "bg-orange-500/10 border-orange-500/20 text-orange-400" },
+          { label: "Medium", val: 1, cls: "bg-amber-500/10 border-amber-500/20 text-amber-400" },
+          { label: "Low", val: 1, cls: "bg-blue-500/10 border-blue-500/20 text-blue-400" },
         ].map(s => (
-          <div key={s.label} className="rounded-2xl p-5" style={{ backgroundColor:"#1e2130", border:"1px solid #2a2d3e" }}>
+          <div key={s.label} className="rounded-2xl p-5" style={{ backgroundColor: "#1e2130", border: "1px solid #2a2d3e" }}>
             <div className={`inline-flex px-2.5 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wide border mb-3 ${s.cls}`}>{s.label}</div>
             <div className="text-[28px] font-extrabold text-slate-100">{s.val}</div>
             <div className="text-[12px] text-slate-500">violations</div>
@@ -69,15 +69,15 @@ export default function Compliance() {
       </div>
 
       {/* Table */}
-      <div className="rounded-2xl overflow-hidden" style={{ backgroundColor:"#1e2130", border:"1px solid #2a2d3e" }}>
-        <div className="flex items-center justify-between px-5 py-4 gap-3 flex-wrap" style={{ borderBottom:"1px solid #2a2d3e" }}>
+      <div className="rounded-2xl overflow-hidden" style={{ backgroundColor: "#1e2130", border: "1px solid #2a2d3e" }}>
+        <div className="flex items-center justify-between px-5 py-4 gap-3 flex-wrap" style={{ borderBottom: "1px solid #2a2d3e" }}>
           <h3 className="text-base font-bold text-slate-100">Compliance Violations</h3>
           <div className="flex items-center gap-3 flex-wrap">
-            <div className="flex items-center gap-2 rounded-lg px-3 py-2" style={{ backgroundColor:"#0f1117", border:"1px solid #2a2d3e" }}>
+            <div className="flex items-center gap-2 rounded-lg px-3 py-2" style={{ backgroundColor: "#0f1117", border: "1px solid #2a2d3e" }}>
               <Search size={14} className="text-slate-500" />
               <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search violations..." className="bg-transparent outline-none text-slate-100 text-[13px] w-36 placeholder:text-slate-500" />
             </div>
-            <select value={filter} onChange={e => setFilter(e.target.value)} className="rounded-lg px-3 py-2 text-slate-400 text-[13px] outline-none cursor-pointer" style={{ backgroundColor:"#0f1117", border:"1px solid #2a2d3e" }}>
+            <select value={filter} onChange={e => setFilter(e.target.value)} className="rounded-lg px-3 py-2 text-slate-400 text-[13px] outline-none cursor-pointer" style={{ backgroundColor: "#0f1117", border: "1px solid #2a2d3e" }}>
               <option value="all">All</option>
               <option value="critical">Critical</option>
               <option value="high">High</option>
@@ -88,18 +88,18 @@ export default function Compliance() {
             </select>
           </div>
         </div>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto w-[100vw]">
           <table className="w-full border-collapse">
             <thead>
-              <tr style={{ borderBottom:"1px solid #2a2d3e" }}>
-                {["ID","Violation Type","User","Listing","Severity","Status","Date","Actions"].map(h => (
+              <tr style={{ borderBottom: "1px solid #2a2d3e" }}>
+                {["ID", "Violation Type", "User", "Listing", "Severity", "Status", "Date", "Actions"].map(h => (
                   <th key={h} className={TH}>{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {filtered.map(v => (
-                <tr key={v.id} className="hover:bg-[#252840] transition-colors" style={{ borderBottom:"1px solid #2a2d3e" }}>
+                <tr key={v.id} className="hover:bg-[#252840] transition-colors" style={{ borderBottom: "1px solid #2a2d3e" }}>
                   <td className={TD}><span className="text-xs font-bold text-violet-400 bg-violet-500/10 px-2 py-0.5 rounded-md">{v.id}</span></td>
                   <td className={`${TD} max-w-[220px]`}><div className="text-slate-100 font-medium text-[13px]">{v.type}</div></td>
                   <td className={TD}>{v.user}</td>
@@ -126,8 +126,8 @@ export default function Compliance() {
       {/* Modal */}
       {selected && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[200]" onClick={() => setSelected(null)}>
-          <div className="rounded-2xl overflow-hidden shadow-[0_24px_60px_rgba(0,0,0,0.5)] w-[500px] max-w-[95vw]" style={{ backgroundColor:"#1e2130", border:"1px solid #2a2d3e" }} onClick={e => e.stopPropagation()}>
-            <div className="flex items-center justify-between px-5 py-4" style={{ borderBottom:"1px solid #2a2d3e" }}>
+          <div className="rounded-2xl overflow-hidden shadow-[0_24px_60px_rgba(0,0,0,0.5)] w-[500px] max-w-[95vw]" style={{ backgroundColor: "#1e2130", border: "1px solid #2a2d3e" }} onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between px-5 py-4" style={{ borderBottom: "1px solid #2a2d3e" }}>
               <div>
                 <h3 className="text-base font-bold text-slate-100">Violation Review</h3>
                 <span className="text-xs font-bold text-violet-400 bg-violet-500/10 px-2 py-0.5 rounded-md">{selected.id}</span>
@@ -137,22 +137,22 @@ export default function Compliance() {
             <div className="p-5 flex flex-col gap-4">
               <div className="grid grid-cols-2 gap-3">
                 {[
-                  { label:"User",     val:selected.user },
-                  { label:"Listing",  val:<span className="text-blue-400">{selected.listing}</span> },
-                  { label:"Severity", val:<span className={`flex items-center gap-1.5 text-[11px] font-semibold uppercase px-2 py-0.5 rounded-full border w-fit ${SEV[selected.severity].cls}`}>{SEV[selected.severity].icon}{selected.severity}</span> },
-                  { label:"Status",   val:<span className={`text-[11px] font-semibold uppercase px-2 py-0.5 rounded-full border ${STATUS[selected.status]}`}>{selected.status}</span> },
+                  { label: "User", val: selected.user },
+                  { label: "Listing", val: <span className="text-blue-400">{selected.listing}</span> },
+                  { label: "Severity", val: <span className={`flex items-center gap-1.5 text-[11px] font-semibold uppercase px-2 py-0.5 rounded-full border w-fit ${SEV[selected.severity].cls}`}>{SEV[selected.severity].icon}{selected.severity}</span> },
+                  { label: "Status", val: <span className={`text-[11px] font-semibold uppercase px-2 py-0.5 rounded-full border ${STATUS[selected.status]}`}>{selected.status}</span> },
                 ].map(r => (
-                  <div key={r.label} className="rounded-xl p-3" style={{ backgroundColor:"#252840" }}>
+                  <div key={r.label} className="rounded-xl p-3" style={{ backgroundColor: "#252840" }}>
                     <div className="text-[11px] text-slate-500 mb-1">{r.label}</div>
                     <div className="text-sm font-semibold text-slate-200">{r.val}</div>
                   </div>
                 ))}
               </div>
-              <div className="rounded-xl p-3" style={{ backgroundColor:"#252840" }}>
+              <div className="rounded-xl p-3" style={{ backgroundColor: "#252840" }}>
                 <div className="text-[11px] text-slate-500 mb-2">Violation Type</div>
                 <div className="text-[14px] font-semibold text-slate-100">{selected.type}</div>
               </div>
-              <div className="rounded-xl p-3" style={{ backgroundColor:"#252840" }}>
+              <div className="rounded-xl p-3" style={{ backgroundColor: "#252840" }}>
                 <div className="text-[11px] text-slate-500 mb-2">Description</div>
                 <p className="text-sm text-slate-300 leading-relaxed">{selected.desc}</p>
               </div>
@@ -163,7 +163,7 @@ export default function Compliance() {
                 <button className="flex-1 py-2.5 rounded-xl text-sm font-semibold bg-red-500/10 text-red-400 border border-red-500/30 hover:bg-red-500/20 transition-all cursor-pointer">
                   Escalate
                 </button>
-                <button onClick={() => setSelected(null)} className="px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-400 hover:bg-[#252840] transition-all cursor-pointer" style={{ border:"1px solid #353852" }}>
+                <button onClick={() => setSelected(null)} className="px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-400 hover:bg-[#252840] transition-all cursor-pointer" style={{ border: "1px solid #353852" }}>
                   Cancel
                 </button>
               </div>
