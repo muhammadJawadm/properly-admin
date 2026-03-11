@@ -12,8 +12,8 @@ import Analytics from "./pages/Analytics"
 import Compliance from "./pages/Compliance"
 
 function AdminLayout({ children }) {
-  // On small screens start collapsed; on desktop start expanded
-  const [collapsed, setCollapsed] = useState(() => window.innerWidth < 768)
+  // collapsed only matters on desktop (md+); on mobile sidebar is hidden via transform
+  const [collapsed, setCollapsed] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
 
   // Auto-respond to window resize
@@ -28,20 +28,20 @@ function AdminLayout({ children }) {
   }, [])
 
   return (
-    <div className="flex min-h-screen" style={{ backgroundColor: "#0f1117" }}>
+    <div className="flex min-h-screen overflow-x-hidden" style={{ backgroundColor: "#0f1117" }}>
       <Sidebar
         collapsed={collapsed}
         setCollapsed={setCollapsed}
         mobileOpen={mobileOpen}
         setMobileOpen={setMobileOpen}
       />
-      {/* On mobile, no left margin (sidebar is overlaid); on desktop, push content right */}
+      {/* On mobile: no left margin (sidebar overlays); on desktop: push content right by sidebar width */}
       <div
-        className="flex flex-col flex-1 min-h-screen transition-all duration-300 md:ml-[var(--sidebar-w)]"
+        className="flex flex-col flex-1 min-h-screen min-w-0 transition-all duration-300 md:ml-[var(--sidebar-w)]"
         style={{ "--sidebar-w": collapsed ? "72px" : "260px" }}
       >
         <Header onMenuClick={() => setMobileOpen(true)} />
-        <main className="flex-1 overflow-y-auto p-6" style={{ backgroundColor: "#0f1117" }}>
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6" style={{ backgroundColor: "#0f1117" }}>
           {children}
         </main>
       </div>

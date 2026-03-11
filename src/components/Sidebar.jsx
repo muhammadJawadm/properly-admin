@@ -45,11 +45,11 @@ export default function Sidebar({ collapsed, setCollapsed, mobileOpen, setMobile
         className={`
           fixed top-0 left-0 h-screen flex flex-col z-50 overflow-hidden
           transition-[width,transform] duration-300 ease-in-out
-          /* mobile: slide in/out as full-width drawer */
           ${mobileOpen ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0
         `}
         style={{
+          /* On mobile always full drawer width; on desktop respect collapsed */
           width: collapsed ? 72 : 260,
           backgroundColor: "#1a1d27",
           borderRight: "1px solid #2a2d3e",
