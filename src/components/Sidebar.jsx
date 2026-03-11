@@ -46,10 +46,10 @@ export default function Sidebar({ collapsed, setCollapsed, mobileOpen, setMobile
           fixed top-0 left-0 h-screen flex flex-col z-50 overflow-hidden
           transition-[width,transform] duration-300 ease-in-out
           ${mobileOpen ? "translate-x-0" : "-translate-x-full"}
-          md:translate-x-0
+          lg:translate-x-0
         `}
         style={{
-          /* On mobile always full drawer width; on desktop respect collapsed */
+          /* On mobile/tablet: full drawer width; on desktop (lg+): respect collapsed */
           width: collapsed ? 72 : 260,
           backgroundColor: "#1a1d27",
           borderRight: "1px solid #2a2d3e",
@@ -84,7 +84,7 @@ export default function Sidebar({ collapsed, setCollapsed, mobileOpen, setMobile
           {/* Mobile close button */}
           <button
             onClick={() => setMobileOpen(false)}
-            className="md:hidden absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-6 h-6 rounded-md text-slate-500 hover:text-violet-400 transition-all"
+            className="lg:hidden absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-6 h-6 rounded-md text-slate-500 hover:text-violet-400 transition-all"
             style={{ backgroundColor: "#252840", border: "1px solid #353852" }}
             title="Close sidebar"
           >

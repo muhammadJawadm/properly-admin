@@ -35,7 +35,7 @@ export default function Header({ onMenuClick }) {
         {/* Hamburger — mobile only */}
         <button
           onClick={onMenuClick}
-          className="md:hidden flex items-center justify-center w-9 h-9 rounded-lg text-slate-400 hover:bg-[#252840] hover:text-violet-400 transition-all shrink-0"
+          className="lg:hidden flex items-center justify-center w-9 h-9 rounded-lg text-slate-400 hover:bg-[#252840] hover:text-violet-400 transition-all shrink-0"
           style={{ border: "1px solid #2a2d3e" }}
           aria-label="Open sidebar"
         >

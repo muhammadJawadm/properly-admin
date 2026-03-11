@@ -205,10 +205,10 @@ export default function Payments() {
       <div className="rounded-2xl overflow-hidden" style={{ backgroundColor: "#1e2130", border: "1px solid #2a2d3e" }}>
         <div className="flex items-center justify-between px-5 py-4 gap-3 flex-wrap" style={{ borderBottom: "1px solid #2a2d3e" }}>
           <h3 className="text-base font-bold text-slate-100">Transaction Ledger</h3>
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 rounded-lg px-3 py-2" style={{ backgroundColor: "#0f1117", border: "1px solid #2a2d3e" }}>
+          <div className="flex items-center gap-2 flex-wrap w-full sm:w-auto">
+            <div className="flex items-center gap-2 rounded-lg px-3 py-2 flex-1 sm:flex-none" style={{ backgroundColor: "#0f1117", border: "1px solid #2a2d3e" }}>
               <Search size={14} className="text-slate-500" />
-              <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search transactions..." className="bg-transparent outline-none text-slate-100 text-[13px] w-40 placeholder:text-slate-500" />
+              <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search transactions..." className="bg-transparent outline-none text-slate-100 text-[13px] w-full sm:w-36 placeholder:text-slate-500" />
             </div>
             <select value={filter} onChange={e => setFilter(e.target.value)} className="rounded-lg px-3 py-2 text-slate-400 text-[13px] outline-none cursor-pointer" style={{ backgroundColor: "#0f1117", border: "1px solid #2a2d3e" }}>
               <option value="all">All</option>
@@ -218,7 +218,7 @@ export default function Payments() {
             </select>
           </div>
         </div>
-        <div className="overflow-x-auto w-[100vw]">
+        <div className="overflow-x-auto w-full">
           <table className="w-full border-collapse">
             <thead>
               <tr style={{ borderBottom: "1px solid #2a2d3e" }}>

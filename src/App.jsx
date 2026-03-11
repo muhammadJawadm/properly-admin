@@ -19,8 +19,8 @@ function AdminLayout({ children }) {
   // Auto-respond to window resize
   useEffect(() => {
     const onResize = () => {
-      if (window.innerWidth >= 768) {
-        setMobileOpen(false) // close mobile drawer when going to desktop
+      if (window.innerWidth >= 1024) {
+        setMobileOpen(false) // close drawer when going to desktop (lg+)
       }
     }
     window.addEventListener("resize", onResize)
@@ -37,7 +37,7 @@ function AdminLayout({ children }) {
       />
       {/* On mobile: no left margin (sidebar overlays); on desktop: push content right by sidebar width */}
       <div
-        className="flex flex-col flex-1 min-h-screen min-w-0 transition-all duration-300 md:ml-[var(--sidebar-w)]"
+        className="flex flex-col flex-1 min-h-screen min-w-0 transition-all duration-300 lg:ml-[var(--sidebar-w)]"
         style={{ "--sidebar-w": collapsed ? "72px" : "260px" }}
       >
         <Header onMenuClick={() => setMobileOpen(true)} />
