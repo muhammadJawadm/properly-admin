@@ -71,7 +71,7 @@ export default function Sidebar({ collapsed, setCollapsed, mobileOpen, setMobile
           )}
 
           {/* Desktop collapse toggle */}
-          <button
+          {/* <button
             onClick={() => setCollapsed(!collapsed)}
             className={`hidden md:flex items-center justify-center w-6 h-6 rounded-md text-slate-500 hover:text-violet-400 transition-all ${collapsed ? "mx-auto" : "absolute right-3 top-1/2 -translate-y-1/2"
               }`}
@@ -79,7 +79,7 @@ export default function Sidebar({ collapsed, setCollapsed, mobileOpen, setMobile
             title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
           >
             {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
-          </button>
+          </button> */}
 
           {/* Mobile close button */}
           <button
