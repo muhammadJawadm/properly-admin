@@ -93,7 +93,7 @@ export default function Header({ onMenuClick }) {
 
             {open && (
               <div
-                className="absolute top-[calc(100%+10px)] right-0 w-80 rounded-xl shadow-[0_20px_40px_rgba(0,0,0,0.4)] overflow-hidden z-50"
+                className="absolute top-[calc(100%+10px)] -right-12 w-72 rounded-xl shadow-[0_20px_40px_rgba(0,0,0,0.4)] overflow-hidden z-50"
                 style={{ backgroundColor: "#1e2130", border: "1px solid #2a2d3e" }}
               >
                 <div className="flex items-center justify-between px-4 py-3.5" style={{ borderBottom: "1px solid #2a2d3e" }}>
