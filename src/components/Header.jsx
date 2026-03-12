@@ -46,7 +46,7 @@ export default function Header({ onMenuClick }) {
         {/* Page title */}
         <div className="flex flex-col leading-tight flex-1 min-w-0">
           <h1 className="text-[17px] font-bold text-slate-100">{page.title}</h1>
-          <span className="text-xs text-slate-500">{page.sub}</span>
+          <span className="hidden sm:block text-xs text-slate-500">{page.sub}</span>
         </div>
 
         {/* Right controls */}
