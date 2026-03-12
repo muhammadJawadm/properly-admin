@@ -1,4 +1,4 @@
-import { useState } from "react"
+﻿import { useState } from "react"
 import { useLocation } from "react-router-dom"
 import { Bell, Search, ChevronDown, Menu } from "lucide-react"
 
@@ -25,6 +25,7 @@ export default function Header({ onMenuClick }) {
   const page = PAGE_INFO[pathname] || { title: "Admin", sub: "" }
   const [open, setOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
+  const [profileOpen, setProfileOpen] = useState(false)
 
   return (
     <div className="sticky top-0 z-40">
@@ -123,18 +124,84 @@ export default function Header({ onMenuClick }) {
           </div>
 
           {/* Admin profile */}
-          <div
-            className="flex items-center gap-2.5 rounded-xl pl-1.5 pr-2 sm:pr-3 py-1.5 cursor-pointer hover:border-violet-500 hover:bg-[#252840] transition-all"
-            style={{ backgroundColor: "#0f1117", border: "1px solid #2a2d3e" }}
-          >
-            <div className="w-7 h-7 bg-gradient-to-br from-violet-600 to-violet-400 rounded-lg flex items-center justify-center text-[13px] font-bold text-white shrink-0">
-              A
+          <div className="relative">
+            <div
+              onClick={() => setProfileOpen(p => !p)}
+              className={`flex items-center gap-2.5 rounded-xl pl-1.5 pr-2 sm:pr-3 py-1.5 cursor-pointer transition-all ${
+                profileOpen ? "border-violet-500 bg-[#252840]" : "hover:border-violet-500 hover:bg-[#252840]"
+              }`}
+              style={{ backgroundColor: profileOpen ? undefined : "#0f1117", border: `1px solid ${profileOpen ? "#7c3aed" : "#2a2d3e"}` }}
+            >
+              <div className="w-7 h-7 bg-gradient-to-br from-violet-600 to-violet-400 rounded-lg flex items-center justify-center text-[13px] font-bold text-white shrink-0">
+                A
+              </div>
+              <div className="hidden sm:flex flex-col leading-tight">
+                <span className="text-[13px] font-semibold text-slate-100">Super Admin</span>
+                <span className="text-[10px] text-slate-500">Administrator</span>
+              </div>
+              <ChevronDown size={13} className={`hidden sm:block text-slate-500 ml-1 transition-transform duration-200 ${profileOpen ? "rotate-180" : ""}`} />
             </div>
-            <div className="hidden sm:flex flex-col leading-tight">
-              <span className="text-[13px] font-semibold text-slate-100">Super Admin</span>
-              <span className="text-[10px] text-slate-500">Administrator</span>
-            </div>
-            <ChevronDown size={13} className="hidden sm:block text-slate-500 ml-1" />
+
+            {profileOpen && (
+              <div
+                className="absolute top-[calc(100%+10px)] right-0 w-72 rounded-xl shadow-[0_20px_40px_rgba(0,0,0,0.4)] overflow-hidden z-50"
+                style={{ backgroundColor: "#1e2130", border: "1px solid #2a2d3e" }}
+              >
+                {/* Profile header */}
+                <div className="px-4 py-4 flex items-center gap-3" style={{ borderBottom: "1px solid #2a2d3e" }}>
+                  <div className="w-12 h-12 bg-gradient-to-br from-violet-600 to-violet-400 rounded-xl flex items-center justify-center text-lg font-bold text-white shrink-0">
+                    A
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-[14px] font-bold text-slate-100">Super Admin</span>
+                    <span className="text-[12px] text-slate-400">admin@properly.com</span>
+                    <span className="mt-1 inline-flex items-center gap-1 text-[10px] font-semibold bg-violet-500/15 text-violet-400 px-2 py-0.5 rounded-full w-fit">
+                      <span className="w-1.5 h-1.5 rounded-full bg-violet-400 inline-block" />
+                      Administrator
+                    </span>
+                  </div>
+                </div>
+
+                {/* Stats row */}
+                <div className="grid grid-cols-3 divide-x divide-[#2a2d3e]" style={{ borderBottom: "1px solid #2a2d3e" }}>
+                  {[
+                    { label: "Role", value: "Admin" },
+                    { label: "Status", value: "Active" },
+                    { label: "Since", value: "2024" },
+                  ].map(s => (
+                    <div key={s.label} className="flex flex-col items-center py-3">
+                      <span className="text-[13px] font-semibold text-slate-100">{s.value}</span>
+                      <span className="text-[10px] text-slate-500">{s.label}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Menu items */}
+                {[
+                  { icon: "👤", label: "My Profile" },
+                  { icon: "⚙️", label: "Account Settings" },
+                  { icon: "🔒", label: "Change Password" },
+                  { icon: "📋", label: "Activity Log" },
+                ].map(item => (
+                  <div
+                    key={item.label}
+                    className="flex items-center gap-3 px-4 py-2.5 hover:bg-[#252840] cursor-pointer transition-colors"
+                    style={{ borderBottom: "1px solid #2a2d3e" }}
+                  >
+                    <span className="text-[15px]">{item.icon}</span>
+                    <span className="text-[13px] text-slate-300">{item.label}</span>
+                  </div>
+                ))}
+
+                {/* Sign out */}
+                <div
+                  className="flex items-center gap-3 px-4 py-2.5 hover:bg-red-500/10 cursor-pointer transition-colors"
+                >
+                  <span className="text-[15px]">🚪</span>
+                  <span className="text-[13px] text-red-400 font-semibold">Sign Out</span>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </header>
