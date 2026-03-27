@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom"
 import {
   LayoutDashboard, ShieldCheck, Gavel, CreditCard,
   Building2, BarChart3, FileWarning, ChevronLeft,
-  ChevronRight, LogOut, Settings, X
+  ChevronRight, LogOut, Settings, X, Bell
 } from "lucide-react"
 import logo from "../assets/Logo.png"
 
@@ -15,6 +15,7 @@ const NAV = [
   { icon: Building2, label: "Listings & Sales", path: "/listings" },
   { icon: BarChart3, label: "Analytics", path: "/analytics" },
   { icon: FileWarning, label: "Compliance", path: "/compliance" },
+  { icon: Bell, label: "Notifications", path: "/notifications" },
 ]
 
 export default function Sidebar({ collapsed, setCollapsed, mobileOpen, setMobileOpen }) {

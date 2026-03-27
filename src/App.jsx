@@ -10,6 +10,7 @@ import Payments from "./pages/Payments"
 import Listings from "./pages/Listings"
 import Analytics from "./pages/Analytics"
 import Compliance from "./pages/Compliance"
+import Notifications from "./pages/Notifications"
 
 function AdminLayout({ children }) {
   // collapsed only matters on desktop (md+); on mobile sidebar is hidden via transform
@@ -62,6 +63,7 @@ export default function App() {
         <Route path="/listings" element={<AdminLayout><Listings /></AdminLayout>} />
         <Route path="/analytics" element={<AdminLayout><Analytics /></AdminLayout>} />
         <Route path="/compliance" element={<AdminLayout><Compliance /></AdminLayout>} />
+        <Route path="/notifications" element={<AdminLayout><Notifications /></AdminLayout>} />
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
     </BrowserRouter>
