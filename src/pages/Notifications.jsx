@@ -4,7 +4,7 @@ import { Bell, Send, Clock, Settings, Search, Filter, Plus, CheckCircle2, AlertC
 const NOTIFICATION_HISTORY = [
   { id: 1, title: "System Update v2.4", message: "New features have been added to the renter dashboard.", audience: "All Users", type: "System", date: "2026-03-27 09:00 AM", status: "Sent" },
   { id: 2, title: "Payment Reminder", message: "Your weekly payout has been processed.", audience: "Hosts only", type: "Alert", date: "2026-03-26 02:30 PM", status: "Sent" },
-  { id: 3, title: "Promotional Offer", message: "Get 20% off your next rental this weekend!", audience: "Renters only", type: "Promo", date: "2026-03-25 11:15 AM", status: "Sent" },
+  { id: 3, title: "Promotional Offer", message: "Get 20% off your next rental this weekend!", audience: "Renters only", type: "Promo", date: "2026-04-10 09:30 AM", status: "Scheduled" },
 ]
 
 const DUMMY_USERS = [
@@ -20,6 +20,8 @@ export default function Notifications() {
   const [message, setMessage] = useState("")
   const [audience, setAudience] = useState("All Users")
   const [channels, setChannels] = useState({ push: true, email: false, whatsapp: false })
+  const [deliveryType, setDeliveryType] = useState("now")
+  const [scheduledAt, setScheduledAt] = useState("")
   
   // For specific user selection
   const [searchTerm, setSearchTerm] = useState("")
@@ -31,6 +33,7 @@ export default function Notifications() {
 
   const handleSend = (e) => {
     e.preventDefault()
+    const scheduleDate = scheduledAt ? new Date(scheduledAt) : null
     
     // Validation
     if (!channels.push && !channels.email && !channels.whatsapp) {
@@ -43,13 +46,31 @@ export default function Notifications() {
       return
     }
 
+    if (deliveryType === "scheduled") {
+      if (!scheduledAt) {
+        alert("Please choose a schedule date and time.")
+        return
+      }
+
+      if (Number.isNaN(scheduleDate?.getTime()) || scheduleDate <= new Date()) {
+        alert("Scheduled date and time must be in the future.")
+        return
+      }
+    }
+
     // Implementation for sending notification would go here
     setTitle("")
     setMessage("")
     setAudience("All Users")
     setSelectedUsers([])
     setChannels({ push: true, email: false, whatsapp: false })
-    alert("Notification sent successfully!")
+    setDeliveryType("now")
+    setScheduledAt("")
+    alert(
+      deliveryType === "scheduled"
+        ? `Notification scheduled successfully for ${scheduleDate.toLocaleString()}!`
+        : "Notification sent successfully!"
+    )
   }
 
   const filteredUsers = DUMMY_USERS.filter(u => 
@@ -169,6 +190,51 @@ export default function Notifications() {
                 </select>
               </div>
 
+              {/* Delivery Timing */}
+              <div className="flex flex-col gap-3">
+                <label className="text-sm font-medium text-slate-300">Delivery Timing</label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setDeliveryType("now")}
+                    className={`flex items-center gap-2 px-4 py-3 rounded-xl border transition-all text-left ${
+                      deliveryType === "now"
+                        ? "bg-violet-600/20 border-violet-500 text-violet-300"
+                        : "bg-[#0f1117] border-[#2a2d3e] text-slate-400 hover:border-slate-500"
+                    }`}
+                  >
+                    <Send size={16} className="shrink-0" />
+                    Send now
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setDeliveryType("scheduled")}
+                    className={`flex items-center gap-2 px-4 py-3 rounded-xl border transition-all text-left ${
+                      deliveryType === "scheduled"
+                        ? "bg-blue-600/20 border-blue-500 text-blue-300"
+                        : "bg-[#0f1117] border-[#2a2d3e] text-slate-400 hover:border-slate-500"
+                    }`}
+                  >
+                    <Clock size={16} className="shrink-0" />
+                    Schedule for later
+                  </button>
+                </div>
+              </div>
+
+              {deliveryType === "scheduled" && (
+                <div className="flex flex-col gap-2 w-full p-3 sm:p-4 bg-[#0f1117] border border-[#2a2d3e] rounded-xl">
+                  <label className="text-sm font-medium text-slate-300">Schedule Date & Time</label>
+                  <input
+                    type="datetime-local"
+                    value={scheduledAt}
+                    onChange={(e) => setScheduledAt(e.target.value)}
+                    min={new Date(Date.now() + 5 * 60 * 1000).toISOString().slice(0, 16)}
+                    className="bg-[#1a1d27] border border-[#2a2d3e] text-slate-200 text-sm rounded-lg px-4 py-3 outline-none focus:border-violet-500 w-full"
+                  />
+                  <p className="text-xs text-slate-500">The notification will be sent automatically at the scheduled time.</p>
+                </div>
+              )}
+
               {/* Specific Users Selection */}
               {audience === "Specific User(s)" && (
                 <div className="flex flex-col gap-3 p-3 sm:p-4 bg-[#0f1117] border border-[#2a2d3e] rounded-xl w-full">
@@ -259,7 +325,7 @@ export default function Notifications() {
                   className="w-full sm:w-auto bg-violet-600 hover:bg-violet-500 text-white font-medium px-6 py-3 sm:py-2.5 rounded-xl transition-colors flex justify-center items-center gap-2"
                 >
                   <Send size={18} className="shrink-0" />
-                  Send Notification
+                  {deliveryType === "scheduled" ? "Schedule Notification" : "Send Notification"}
                 </button>
               </div>
             </form>
@@ -311,8 +377,15 @@ export default function Notifications() {
                         </td>
                         <td className="py-4 px-2 text-slate-400 align-top whitespace-nowrap">{item.date}</td>
                         <td className="py-4 px-2 align-top">
-                          <span className="flex items-center justify-center gap-1.5 text-green-400 bg-green-400/10 w-max px-2.5 py-1 rounded-md text-xs font-medium">
-                            <CheckCircle2 size={14} className="shrink-0" /> {item.status}
+                          <span className={`flex items-center justify-center gap-1.5 w-max px-2.5 py-1 rounded-md text-xs font-medium ${
+                            item.status === "Scheduled" ? "text-blue-400 bg-blue-400/10" : "text-green-400 bg-green-400/10"
+                          }`}>
+                            {item.status === "Scheduled" ? (
+                              <Clock size={14} className="shrink-0" />
+                            ) : (
+                              <CheckCircle2 size={14} className="shrink-0" />
+                            )}
+                            {item.status}
                           </span>
                         </td>
                       </tr>
